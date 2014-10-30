@@ -6,9 +6,7 @@ player2 = Player.new("Curly", 60)
 player3 = Player.new("Larry", 125)
 
 game = Game.new("Knuckleheads")
-game.add_player(player1)
-game.add_player(player2)
-game.add_player(player3)
+game.load_players(ARGV.shift || "/home/drusolis/Documents/pragstudio/studio_game/players.csv")
 
 loop do
   puts "How many games do you want to play? (enter 'quit' to quit)"
@@ -19,6 +17,7 @@ loop do
   when 'quit', 'exit'
     game.print_stats()
     game.high_scores()
+    game.save_high_scores()
     break
   else
     puts "Please enter a number or 'quit'"
