@@ -9,6 +9,18 @@ game = Game.new("Knuckleheads")
 game.add_player(player1)
 game.add_player(player2)
 game.add_player(player3)
-game.play(2)
-game.print_stats()
-game.high_scores()
+
+loop do
+  puts "How many games do you want to play? (enter 'quit' to quit)"
+  answer = gets.chomp.downcase
+  case answer
+  when /^\d+$/
+    game.play(Integer(answer))
+  when 'quit', 'exit'
+    game.print_stats()
+    game.high_scores()
+    break
+  else
+    puts "Please enter a number or 'quit'"
+  end
+end
