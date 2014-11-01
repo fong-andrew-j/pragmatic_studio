@@ -43,7 +43,6 @@ class Game
       @player.each do | player |
         puts player
         GameTurn.take_turn(player)
-        puts player
       end
       puts "\n"
     end
