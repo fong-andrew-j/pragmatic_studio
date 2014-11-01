@@ -5,9 +5,14 @@ class Player
 
   def initialize(name, health=100)
     @name = name.capitalize
-    @health = health    
+    @health = health
     @found_treasures = Hash.new(0)
     @score = score
+  end
+
+  def self.from_csv(line)
+    name, health = line.split(',')
+    Player.new(name, Integer(health))
   end
 
   def say_hello()
@@ -52,28 +57,28 @@ class Player
       0
     end
   end
-  
+
   def found_treasure(treasure)
     @found_treasures[treasure.name] += treasure.points
     score
     puts "#{@name} found a #{treasure.name} worth #{treasure.points} points!"
     puts "#{@name}'s treasures: #{@found_treasures}."
   end
-  
+
   def points
     total = 0
-    @found_treasures.each do |key, value| 
+    @found_treasures.each do |key, value|
       total += value
     end
     total
   end
-  
+
   def each_found_treasure
     @found_treasures.each do | name, points |
-      yield Treasure.new(name, points)      
+      yield Treasure.new(name, points)
     end
   end
-  
+
   if __FILE__ == $0
     player = Player.new("moe")
     puts player.name

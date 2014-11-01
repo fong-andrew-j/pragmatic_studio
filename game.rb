@@ -12,8 +12,7 @@ class Game
 
   def load_players(csv)
     File.readlines(csv).each do | line |
-      name, health = line.split(',')
-      player = Player.new(name, Integer(health))
+      player = Player.from_csv(line)
       add_player(player)
     end
   end
@@ -60,7 +59,7 @@ class Game
       end
     end
 
-    puts "#{:name} Statistics"
+    puts "#{@name} Statistics"
     strong, weak = @player.partition { |player| player.strong? }
 
     puts "#{strong.count} strong players:"
@@ -80,7 +79,7 @@ class Game
       puts formatted_string(player)
     end
   end
-  
+
   def formatted_string(player)
     "#{player.name.ljust(30, '.')} #{player.score}"
   end
