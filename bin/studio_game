@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/studio_game/game'
+require_relative '../lib/studio_game/player'
+require_relative '../lib/studio_game/clumsy_player'
+require_relative '../lib/studio_game/berserk_player'
+
+player1 = StudioGame::Player.new("Moe", 100)
+player2 = StudioGame::Player.new("Curly", 60)
+player3 = StudioGame::Player.new("Larry", 125)
+
+game = StudioGame::Game.new("Knuckleheads")
+default_player_file = File.join(File.dirname(__FILE__), 'players.csv')
+game.load_players(ARGV.shift || default_player_file)
+game.add_player(StudioGame::ClumsyPlayer.new("Bozo", 75))
+game.add_player(StudioGame::BerserkPlayer.new("Spartan", 100))
+
+loop do
+  puts "How many games do you want to play? (enter 'quit' to quit)"
+  answer = gets.chomp.downcase
+  case answer
+  when /^\d+$/
+    game.play(Integer(answer))
+  when 'quit', 'exit'
+    game.print_stats()
+    game.high_scores()
+    game.save_high_scores()
+    break
+  else
+    puts "Please enter a number or 'quit'"
+  end
+end
